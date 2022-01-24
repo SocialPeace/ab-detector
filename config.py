@@ -1,0 +1,8 @@
+CLIENT_ID = "5b9655b7a31ab4fca00c9ead4420e228"
+CLIENT_SECRET = "PJM5niVwfduXPbmRnerGSPBUCJ1JAIkX"
+REDIRECT_URI = "http://127.0.0.1:5050/oauth" 
+CHAT_ID=""
+BOT_URL = "https://api.telegram.org/bot1884113881:AAGueEINsAoxwBAN1HjhEDl_g2Kwf-rC6Wg/"
+TOKEN = "1884113881:AAGueEINsAoxwBAN1HjhEDl_g2Kwf-rC6Wg"
+USER_NAME = ""
+LOCATION = ""

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet" /> 
+    <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+ 
+    <title>ABDetector</title>   
+</head>
+<body>  
+    <section id="info_reg">
+        <h1>비상 연락망으로 초대링크를 보내주세요</h1>
+        <p class="mid">폭력 감지시 연락망으로 알림톡이 도착해요.</p> 
+        <div class="container">  
+            <div class="gray_btn" onClick="sendLinkCustom();" style="cursor: pointer;">초대 링크 보내기</div>
+            <a class="gray_btn" style="margin-left:5px; background-color: #888;" href="/save_chat">완료</a>
+        </div> 
+        <image src="static/assets/img/info_img.png"/>
+    </section> 
+
+<script type="text/javascript">  
+
+    const sendLinkCustom = ()=> {
+        Kakao.init("6843ed231fce64aaa5d3c5d9796f996a");
+        Kakao.Link.sendCustom({
+            templateId:54000 ,
+            serverCallbackArgs: '{"key":"value"}'
+        })
+    }
+</script>
+</body> 

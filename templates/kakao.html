@@ -1,0 +1,23 @@
+
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>카톡 공유</title>
+    <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    </head>
+    <body>
+        <input type="button" onClick="sendLinkCustom();" value="Custom"/>
+        <input type="button" onClick="sendLinkDefault();" value="Default"/>
+    
+    <script type="text/javascript">
+        function sendLinkCustom() {
+            Kakao.init("6843ed231fce64aaa5d3c5d9796f996a");
+            Kakao.Link.sendCustom({
+                templateId:54000 
+            });
+        }
+    </script>
+     
+       
+    </body>
+    </html>

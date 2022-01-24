@@ -1,0 +1,148 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css); /*나눔고딕*/
+
+
+*{
+    font-family: "Nanum Gothic", sans-serif;
+    --basic-br-color:#cdc8c8; /*기본 border 색깔 변수*/
+    --basic-txt-color:#383838;/*기본 글자 색깔 변수*/ 
+}
+input:focus{outline: none;}
+.big{
+    font-size:3em; 
+} 
+body{
+    padding:0px;
+    margin:0px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+} 
+body::-webkit-scrollbar {
+width: 10px;
+}
+body::-webkit-scrollbar-thumb {
+background-color: #c4c3c3;
+border-radius: 10px;
+}
+body::-webkit-scrollbar-track {
+background-color: rgb(255, 255, 255);
+border-radius: 10px;
+box-shadow: inset 0px 0px 5px white;
+}
+/*******index*******/
+#index{
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding-top: 10%;
+    overflow: hidden;
+}
+#index .container{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+#index div[pos="left"]{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#index div[pos="left"] img{
+    width: 70%;
+}
+#index div[pos="right"] {
+    padding:15px;
+    text-align: center; 
+}
+#index div[pos="right"] h1{
+    font-size:5em;
+}
+#index div[pos="right"] .big{
+    margin-top: -50px;
+}
+#index div[pos="right"] img{
+    width:35%;
+    margin:auto;
+}
+
+/*******location*******/
+
+h1{
+    font-size: 3em;
+}
+ 
+#location,#info_reg{
+    width:60%;
+    margin:auto;
+    overflow:hidden;
+    padding:0px 30px;
+    padding-bottom: 15px;
+    background-color: #fff;
+    margin-top: 5%;
+} 
+.input{ 
+    border: 0px;
+    border-bottom: 1px solid #eee;
+    padding:15px;
+    font-size: 1em;
+} 
+.btn{
+    display: block;
+    background-color: #eee;
+    padding:15px 0px;
+    font-size: 1em;
+    text-align: center;
+    cursor: pointer;
+}
+.mid{
+    font-size: 2em;
+}
+#location .mid,#info_reg .mid{
+    margin-top:-15px;
+}
+#location .container,#info_reg .container{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    width: 100%;
+}
+#location #map{ 
+    width: 100%;
+    min-height:400px;
+    height:80%;
+    margin:auto;
+    margin-top:10px; 
+}  
+#location #map{
+    min-height: 400px;
+} 
+#location .btn{
+    background-color: #666;
+    width: 100%;
+    font-size: 1.3em;
+    margin-top: 5px;
+    color: #eee; 
+}  
+#info_reg{
+    padding-top:30px;
+}
+a {
+    text-decoration: none;
+    color: #555;
+}
+.gray_btn{
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    font-size: 1em;
+    padding:15px 0px;
+}
+#info_reg .gray_btn, #info_reg .input{
+    font-size: 1.3em;
+}
+
+#info_reg img{
+    width:60%;
+    margin:auto;
+} 

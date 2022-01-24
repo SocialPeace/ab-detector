@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>ABDetector</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet" />
+        <style> 
+            #my_modal{
+                display: none;
+                width: 50%;
+                padding: 20px 60px;
+                background-color: rgba(255, 255, 255, 0.9);
+                border: 0px;
+                border-radius: 3%;
+            }
+            #my_modal h1{
+                font-size: 1.5em;
+            }
+            #my_modal p{
+                font-size: 1em;
+            }
+            #count{
+                font-weight: bold;
+                font-size: 1.5em;
+            }
+            .gray_btn{
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                font-size: 1em;
+                padding:15px 0px;
+                border-radius: 3%;
+                width:100%;
+            }
+        </style>
+    </head>
+    <body id="grid">
+        <div class="bg"></div>
+        <div id="my_modal">
+            <h1>비정상 행동 감지!</h1>
+            <p><span id="count">10</span> 초 뒤에 알림을 보낼게요.</p>
+            <button class="gray_btn"> 아니요 괜찮습니다. </button>
+        </div>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="/index">ABDetector</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto"> 
+                        <li class="nav-item"><a class="nav-link" href="/mypage">Mypage</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+         
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: {{ url_for('static', filename='assets/img/1.jpg')}}">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="site-heading">
+                            
+                           <i class="fa fa-user-circle" aria-hidden="true" style="float:left"> </i> <div style="float:left;"><h5>&nbsp;서주원</h5></div>
+                           <hr>
+                           <i class="fa fa-location-arrow" aria-hidden="true" style="float: left;"></i> <div style="float:left;"><h5>&nbsp;인천 서구 완정로 34번길 47</h5></div>
+                            <pre>
+                            {{status}}
+                            </pre>
+                            <span class="subheading"> </span> 
+                            <img src="{{ url_for('video_feed') }}" width="850px" height="800px" style="border:white 5px solid;">
+                            <span class="subheading"> </span>
+                            <div class="clearfix"><a class="btn btn-primary float-none">Live Streaming</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+       
+        <!-- Footer-->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <ul class="list-inline text-center">
+
+                            <li class="list-inline-item">
+                                <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <p class="copyright text-muted">Copyright &copy; ABDetector 2021</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{{ url_for('static', filename='js/scripts.js')}}"></script>
+        <script> 
+
+            var last_send_time   = "";
+            var modal_show = false;
+            var send_ready = false; 
+
+            //비정상행동인지 확인
+            const checkStatus = async () => {
+                let data = await fetch("/get/status", {
+                    headers: { "Content-Type": "application/json" },
+                    method: "GET"
+                })
+                .then(res => res.json());
+                
+                console.log(data.abnormal)
+                if (data.abnormal) { 
+                    console.log("비정상 행동 탐지"); 
+                    console.log("모달 상태 : "+ modal_show);  
+                    if(!modal_show)
+                    modal('my_modal'); 
+                } else { 
+                }
+            }
+            
+            //메시지 전송 요청
+            const sendMessage = async () => {
+                let data = await fetch("/send/msg", {
+                    headers: { "Content-Type": "application/json" },
+                    method: "GET"
+                })
+                .then(res => res.json());
+                if(data.result){
+                    console.log("비상 연락망으로 메시지를 전송하였습니다.");
+                    modal_show = false;
+                }else{
+                    console.log("메시지 전송 실패");
+                }
+            }
+            function modal(id) {
+                modal_show = true;
+                var zIndex = 9999;
+                var modal = document.getElementById(id);
+                var need = false;
+                // 모달 div 뒤 배경
+                var bg = document.createElement('div');
+                bg.setStyle({
+                    position: 'fixed',
+                    zIndex: zIndex,
+                    left: '0px',
+                    top: '0px',
+                    width: '100%',
+                    height: '100%',
+                    overflow: 'auto', 
+                    backgroundColor: 'rgba(0,0,0,0.4)'
+                });
+                document.body.append(bg);
+
+                // 닫기 버튼 처리 
+                modal.querySelector('.gray_btn').addEventListener('click', function() {  
+                    var count = document.getElementById("count"); 
+                    bg.remove();
+                    modal.style.display = 'none';  
+                    count.innerHTML = 10; 
+                    console.log("도움 필요 없음");
+                    modal_show = false;
+                    clearTimeout(timerId);
+                });
+
+                modal.setStyle({
+                    position: 'fixed',
+                    display: 'block',
+                    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+                    // 배경 레이어 보다 한칸 위에 보이기
+                    zIndex: zIndex + 1,
+
+                    // div center 정렬
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    msTransform: 'translate(-50%, -50%)',
+                    webkitTransform: 'translate(-50%, -50%)'
+                });
+
+                let delay = 1000; 
+                let timerId = setTimeout(function request() {  
+                    var count = document.getElementById("count"); 
+                    if (count.innerHTML>0)
+                        count.innerHTML = Number(count.innerHTML)-1;
+                    else{ // 10초 후 메시지 전송 
+                        bg.style.display= 'none'
+                        modal.style.display = 'none';
+                        count.innerHTML = 10;
+                        send_ready = true; 
+                    }
+                    if(send_ready){
+                        send_ready = false;
+                        clearTimeout(timerId);
+                        sendMessage();
+
+                    } 
+                    else
+                        timerId = setTimeout(request, delay);
+
+                    
+
+                }, delay);
+                
+                
+            }
+
+            // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
+            Element.prototype.setStyle = function(styles) {
+                for (var k in styles) this.style[k] = styles[k];
+                return this;
+            };
+            
+                
+            var time = 1000*5; // 5초마다 비정상행동인지 체크
+            const myInterval = (callback,interval) =>{
+                setTimeout(()=>{
+                    callback()
+                    myInterval(callback,interval)
+                },interval)
+            }
+            myInterval(checkStatus,time)
+        </script>
+    </body>
+</html>
