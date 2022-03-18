@@ -1,10 +1,9 @@
 # ABDetector
 
 웹캠을 이용한 실시간 비정상 행동 감지 서비스 
-
-비정상 행동이 포착될 경우 등록된 번호로 텔레그램 알림을 받을 수 있음
-
-
+비정상 행동이 포착될 경우 등록된 번호로 텔레그램 알림을 받을 수 있음  
+<img width="497" alt="스크린샷 2022-03-18 오후 4 12 45" src="https://user-images.githubusercontent.com/13061461/158954257-19276377-ccf2-420a-a4cc-997cf83ee375.png">
+![Mar-07-2022 16-09-38](https://user-images.githubusercontent.com/13061461/158954326-b152a6ad-e285-4a9e-a926-91af348e752f.gif)
 
 # 프로젝트 구동 환경
 
